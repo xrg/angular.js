@@ -39,6 +39,8 @@ function $SnifferProvider() {
 
       if(!vendorPrefix) {
         vendorPrefix = ('WebkitOpacity' in bodyStyle) && 'webkit';
+        if (($window.navigator || {}).productSub <= '20030107')
+           boxee = true;
       }
 
       transitions = !!(('transition' in bodyStyle) || (vendorPrefix + 'Transition' in bodyStyle));
