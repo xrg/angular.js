@@ -654,13 +654,8 @@ function parser(text, json, $filter, csp){
 
         if (!o) return undefined;
         v = ensureSafeObject(o[i], text);
-        if (v && v.then) {
-          p = v;
-          if (!('$$v' in v)) {
-            p.$$v = undefined;
-            p.then(function(val) { p.$$v = val; });
-          }
-          v = v.$$v;
+        if (v && v.then && ('$$v' in v)) {
+          return v.$$v;
         }
         return v;
       }, {
@@ -694,13 +689,8 @@ function parser(text, json, $filter, csp){
           : fnPtr(args[0], args[1], args[2], args[3], args[4]);
 
       // Check for promise
-      if (v && v.then) {
-        var p = v;
-        if (!('$$v' in v)) {
-          p.$$v = undefined;
-          p.then(function(val) { p.$$v = val; });
-        }
-        v = v.$$v;
+      if (v && v.then && ('$$v' in v)) {
+        return v.$$v;
       }
 
       return v;
